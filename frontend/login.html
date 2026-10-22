@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Intelligent Timetable Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="auth-bg">
+  <div class="auth-card">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <div class="logo-circle"><i class="fas fa-calendar-alt"></i></div>
+      <h1 class="auth-app-name">Intelligent Timetable<br>Management System</h1>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button id="tabLogin"    class="auth-tab active" onclick="showTab('login')">Login</button>
+      <button id="tabRegister" class="auth-tab"        onclick="showTab('register')">Register</button>
+    </div>
+
+    <!-- Toast -->
+    <div id="authToast" class="auth-toast hidden"></div>
+
+    <!-- ==================== LOGIN FORM ==================== -->
+    <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-user"></i> Username</label>
+        <input id="loginUsername" type="text" class="field-input" placeholder="Enter your username" required autocomplete="username">
+      </div>
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-lock"></i> Password</label>
+        <div class="password-wrap">
+          <input id="loginPassword" type="password" class="field-input" placeholder="Enter your password" required autocomplete="current-password">
+          <button type="button" class="toggle-pw" onclick="togglePw('loginPassword',this)"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button type="submit" class="btn-auth" id="loginBtn">
+        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Login</span>
+        <span class="btn-spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+      </button>
+      <p class="auth-switch">Don't have an account? <a onclick="showTab('register')">Register here</a></p>
+    </form>
+
+    <!-- ==================== REGISTER FORM ==================== -->
+    <form id="registerForm" class="auth-form hidden" onsubmit="handleRegister(event)">
+
+      <!-- Role selector -->
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-id-badge"></i> Register as</label>
+        <div class="role-selector">
+          <label class="role-card" id="roleCardAdmin">
+            <input type="radio" name="role" value="admin" onchange="onRoleChange('admin')">
+            <div class="role-card-inner">
+              <i class="fas fa-user-shield"></i>
+              <span class="role-name">Admin</span>
+              <span class="role-desc">Upload &amp; manage all timetables</span>
+            </div>
+          </label>
+          <label class="role-card" id="roleCardTeacher">
+            <input type="radio" name="role" value="teacher" onchange="onRoleChange('teacher')">
+            <div class="role-card-inner">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span class="role-name">Teacher</span>
+              <span class="role-desc">View your personal schedule</span>
+            </div>
+          </label>
+          <label class="role-card" id="roleCardStudent">
+            <input type="radio" name="role" value="student" onchange="onRoleChange('student')" checked>
+            <div class="role-card-inner">
+              <i class="fas fa-user-graduate"></i>
+              <span class="role-name">Student</span>
+              <span class="role-desc">View all class timetables</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Teacher name (only shown for teacher role) -->
+      <div class="field-group" id="teacherNameGroup" style="display:none">
+        <label class="field-label"><i class="fas fa-chalkboard-teacher"></i> Your Name (as in timetable)</label>
+        <input id="regTeacherName" type="text" class="field-input" placeholder="e.g. Meena Sharma">
+      </div>
+
+      <!-- Class & Section (only shown for student role) -->
+      <div class="field-group" id="studentClassGroup">
+        <label class="field-label"><i class="fas fa-graduation-cap"></i> Your Class &amp; Section</label>
+        <div style="display:flex; gap:10px">
+          <select id="regClassNum" class="field-input" style="flex:1">
+            <option value="" disabled selected>Select Class</option>
+            <option value="1">Class 1</option>
+            <option value="2">Class 2</option>
+            <option value="3">Class 3</option>
+            <option value="4">Class 4</option>
+            <option value="5">Class 5</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+          </select>
+          <select id="regSection" class="field-input" style="flex:0 0 90px">
+            <option value="" disabled selected>Section</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-school"></i> School Name <span class="optional">(optional)</span></label>
+        <input id="regSchool" type="text" class="field-input" placeholder="e.g. Sri Vidya Niketan">
+      </div>
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-user"></i> Username</label>
+        <input id="regUsername" type="text" class="field-input" placeholder="Choose a username" required autocomplete="username">
+      </div>
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-envelope"></i> Email</label>
+        <input id="regEmail" type="email" class="field-input" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label class="field-label"><i class="fas fa-lock"></i> Password</label>
+        <div class="password-wrap">
+          <input id="regPassword" type="password" class="field-input" placeholder="At least 6 characters" required autocomplete="new-password">
+          <button type="button" class="toggle-pw" onclick="togglePw('regPassword',this)"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-auth" id="registerBtn">
+        <span class="btn-text"><i class="fas fa-user-plus"></i> Create Account</span>
+        <span class="btn-spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+      </button>
+      <p class="auth-switch">Already have an account? <a onclick="showTab('login')">Login here</a></p>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  function showTab(tab) {
+    document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+    document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+    hideToast();
+  }
+
+  function onRoleChange(role) {
+    document.getElementById('teacherNameGroup').style.display  = role === 'teacher' ? '' : 'none';
+    document.getElementById('studentClassGroup').style.display = role === 'student' ? '' : 'none';
+    document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    const map = { admin: 'roleCardAdmin', teacher: 'roleCardTeacher', student: 'roleCardStudent' };
+    document.getElementById(map[role]).classList.add('selected');
+  }
+  // Init default selected style
+  document.addEventListener('DOMContentLoaded', () => onRoleChange('student'));
+
+  function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.innerHTML = isText ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+  }
+
+  function showToast(msg, type = 'error') {
+    const t = document.getElementById('authToast');
+    t.textContent = msg;
+    t.className = `auth-toast ${type}`;
+  }
+  function hideToast() {
+    document.getElementById('authToast').className = 'auth-toast hidden';
+  }
+
+  function setLoading(btnId, loading) {
+    const btn = document.getElementById(btnId);
+    btn.querySelector('.btn-text').classList.toggle('hidden', loading);
+    btn.querySelector('.btn-spinner').classList.toggle('hidden', !loading);
+    btn.disabled = loading;
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    hideToast();
+    setLoading('loginBtn', true);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: document.getElementById('loginUsername').value.trim(),
+          password: document.getElementById('loginPassword').value,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/';
+      } else {
+        showToast(data.error || 'Login failed.');
+      }
+    } catch {
+      showToast('Server error. Please try again.');
+    } finally {
+      setLoading('loginBtn', false);
+    }
+  }
+
+  async function handleRegister(e) {
+    e.preventDefault();
+    hideToast();
+    const role = document.querySelector('input[name="role"]:checked')?.value || 'student';
+
+    // Validate student fields
+    if (role === 'student') {
+      const cn = document.getElementById('regClassNum').value;
+      const sc = document.getElementById('regSection').value;
+      if (!cn) { showToast('Please select your class.'); return; }
+      if (!sc) { showToast('Please select your section.'); return; }
+    }
+
+    setLoading('registerBtn', true);
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          username:     document.getElementById('regUsername').value.trim(),
+          email:        document.getElementById('regEmail').value.trim(),
+          password:     document.getElementById('regPassword').value,
+          school_name:  document.getElementById('regSchool').value.trim(),
+          role:         role,
+          teacher_name: document.getElementById('regTeacherName').value.trim(),
+          class_num:    parseInt(document.getElementById('regClassNum').value) || null,
+          section:      document.getElementById('regSection').value || null,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/';
+      } else {
+        showToast(data.error || 'Registration failed.');
+      }
+    } catch {
+      showToast('Server error. Please try again.');
+    } finally {
+      setLoading('registerBtn', false);
+    }
+  }
+
+  // Skip login if already authenticated
+  fetch('/api/auth/me', { credentials: 'include' })
+    .then(r => r.json())
+    .then(d => { if (d.authenticated) window.location.href = '/'; });
+</script>
+</body>
+</html>

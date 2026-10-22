@@ -1,0 +1,22 @@
+﻿{
+  "name": "smart-timetable-scheduler",
+  "version": "1.0.0",
+  "description": "AI-Powered Automatic Timetable Scheduler using CSP + RAG",
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "setup": "python -m venv venv && venv\\Scripts\\pip install -r requirements.txt",
+    "dev": "venv\\Scripts\\python backend\\app.py",
+    "start": "venv\\Scripts\\python backend\\app.py",
+    "install-deps": "venv\\Scripts\\pip install -r requirements.txt",
+    "clean": "if exist venv rmdir /s /q venv"
+  },
+  "engines": {
+    "python": ">=3.10"
+  },
+  "_readme": [
+    "Run 'npm run setup' ONCE to create venv and install all packages.",
+    "Then run 'npm run dev' to start the server — browser opens automatically.",
+    "Visit http://localhost:5000"
+  ]
+}

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Timetable Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p class="loading-title">Generating Timetables</p>
+      <div class="progress-bar-wrap">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <div class="logo-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div class="header-text">
+          <h1 class="header-title">Intelligent Timetable Management System</h1>
+          <p class="header-subtitle">Automated Class Schedule Builder for Classes 1–10</p>
+        </div>
+      </div>
+      <div class="header-user" id="headerUser" style="display:none">
+        <div class="user-chip">
+          <i class="fas fa-school"></i>
+          <span id="headerSchoolName">School</span>
+        </div>
+        <div class="user-chip">
+          <i class="fas fa-user-circle"></i>
+          <span id="headerUsername">User</span>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()" title="Logout">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- =========================================
+         SECTION 1: UPLOAD
+    ========================================== -->
+    <section id="section-upload" class="app-section active">
+      <div class="section-container">
+        <div class="upload-header">
+          <h2 class="section-title"><i class="fas fa-cloud-upload-alt"></i> Upload Teacher Data</h2>
+          <p class="section-desc">Upload a CSV file with teacher and subject assignments to auto-generate 20 timetables for Classes 1-10, Sections A &amp; B.</p>
+        </div>
+
+        <!-- Drag & Drop Zone -->
+        <div id="dropZone" class="drop-zone" onclick="document.getElementById('fileInput').click()">
+          <div class="drop-zone-content">
+            <div class="drop-icon-wrap">
+              <i class="fas fa-cloud-upload-alt drop-icon"></i>
+            </div>
+            <p class="drop-title">Drag &amp; Drop your CSV or Excel file here</p>
+            <p class="drop-or">or</p>
+            <button class="btn btn-outlined" type="button" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">
+              <i class="fas fa-folder-open"></i> Browse File
+            </button>
+            <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" style="display:none">
+          </div>
+          <div id="fileSelectedInfo" class="file-selected-info hidden">
+            <i class="fas fa-file-csv"></i>
+            <span id="selectedFileName">No file chosen</span>
+            <button class="btn-icon-sm" onclick="event.stopPropagation(); clearFile()"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="upload-actions">
+          <button id="generateBtn" class="btn btn-primary" onclick="handleUpload()" disabled>
+            <i class="fas fa-magic"></i> Generate Timetables
+          </button>
+        </div>
+
+        <!-- CSV Format Guide -->
+        <div class="csv-guide">
+          <h3 class="guide-title"><i class="fas fa-info-circle"></i> File Format Guide (CSV or Excel)</h3>
+          <p class="guide-desc">Your CSV file should contain the following columns (use <code>;</code> to separate multiple values within a field):</p>
+          <div class="table-scroll">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>teacher_name</th>
+                  <th>subject</th>
+                  <th>classes</th>
+                  <th>available_days</th>
+                  <th>available_periods</th>
+                  <th>max_periods_per_day</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Ravi Kumar</td><td>Maths</td><td>1;2;3</td><td>Mon;Tue;Wed;Thu;Fri;Sat</td><td>1;2;3;4;5;6;7;8</td><td>6</td></tr>
+                <tr><td>Mary Thomas</td><td>English</td><td>1;2;3;4;5</td><td>Mon;Tue;Wed;Thu;Fri;Sat</td><td>1;2;3;4;5;6;7;8</td><td>6</td></tr>
+                <tr><td>Sai Kiran</td><td>Sports</td><td>1;2;3;4;5;6;7;8;9;10</td><td>Mon;Tue;Wed;Thu;Fri;Sat</td><td>1;2;3;4;5;6;7;8</td><td>8</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         SECTION 2: DASHBOARD
+    ========================================== -->
+    <section id="section-dashboard" class="app-section">
+      <div class="section-container">
+        <div class="dashboard-topbar">
+          <div class="dash-left">
+            <button class="btn btn-secondary btn-sm" onclick="showSection('upload')">
+              <i class="fas fa-arrow-left"></i> Back to Upload
+            </button>
+            <h2 class="dash-title"><i class="fas fa-th-large"></i> Timetable Dashboard</h2>
+          </div>
+          <button class="btn btn-accent" onclick="exportAllPDF()">
+            <i class="fas fa-file-pdf"></i> Export All PDF
+          </button>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#e8f0fe;color:#2a5298"><i class="fas fa-school"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statClasses">0</div>
+              <div class="stat-label">Total Classes</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#e8fde8;color:#27ae60"><i class="fas fa-clock"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statPeriods">0</div>
+              <div class="stat-label">Total Periods</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fef3e8;color:#f39c12"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statAssigned">0</div>
+              <div class="stat-label">Assigned</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#f5f5f5;color:#9e9e9e"><i class="fas fa-question-circle"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statTBD">0</div>
+              <div class="stat-label">TBD</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group Labels -->
+        <div class="group-labels">
+          <div class="group-label"><span class="group-dot junior-dot"></span> Classes 1-5 (Junior)</div>
+          <div class="group-label"><span class="group-dot senior-dot"></span> Classes 6-10 (Senior)</div>
+        </div>
+
+        <!-- Class Cards Grid -->
+        <div id="classGrid" class="class-grid"></div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         SECTION 3: TIMETABLE VIEW
+    ========================================== -->
+    <section id="section-timetable" class="app-section">
+      <div class="section-container">
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+          <button class="crumb-link" onclick="showSection('upload')">
+            <i class="fas fa-arrow-left"></i> Back to Upload
+          </button>
+          <i class="fas fa-chevron-right crumb-sep"></i>
+          <span class="crumb-current">Timetable View</span>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-school"></i> Class</label>
+            <select id="classDropdown" class="class-dropdown" onchange="onFilterChange()">
+              <option value="1">Class 1</option>
+              <option value="2">Class 2</option>
+              <option value="3">Class 3</option>
+              <option value="4">Class 4</option>
+              <option value="5">Class 5</option>
+              <option value="6">Class 6</option>
+              <option value="7">Class 7</option>
+              <option value="8">Class 8</option>
+              <option value="9">Class 9</option>
+              <option value="10">Class 10</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-users"></i> Section</label>
+            <div class="section-btns">
+              <button id="btnSectionA" class="section-btn active" onclick="selectSection('A')">A</button>
+              <button id="btnSectionB" class="section-btn" onclick="selectSection('B')">B</button>
+            </div>
+          </div>
+
+          <div class="filter-display" id="filterDisplay">Class 1 &mdash; Section A</div>
+
+          <div class="filter-actions">
+            <div id="ttSportsBadge" class="sports-badge-inline">
+              <i class="fas fa-running"></i> Sports: <strong id="ttSportsDayText">—</strong>
+            </div>
+            <button class="btn btn-accent btn-sm" onclick="exportCurrentPDF()">
+              <i class="fas fa-file-pdf"></i> Export PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Timetable (rows = Days, columns = Periods) -->
+        <div class="timetable-wrap">
+          <div class="table-scroll">
+            <table id="timetableGrid" class="timetable-table"></table>
+          </div>
+        </div>
+
+        <!-- Subject Legend -->
+        <div id="subjectLegend" class="subject-legend"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FLOATING CHAT -->
+  <button id="chatToggleBtn" class="chat-float-btn" onclick="toggleChat()" title="Ask about timetable">
+    <i class="fas fa-comments"></i>
+    <span class="chat-pulse"></span>
+  </button>
+
+  <!-- Chat Panel -->
+  <div id="chatPanel" class="chat-panel hidden">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+        <div>
+          <div class="chat-header-title">Ask About Timetable</div>
+          <div class="chat-header-sub">Chatbot</div>
+        </div>
+      </div>
+      <button class="btn-icon" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+      <div class="chat-welcome">
+        <div class="chat-welcome-icon"><i class="fas fa-robot"></i></div>
+        <p>Hi! I'm your timetable assistant. Generate timetables first, then ask me anything about schedules, teachers, or subjects!</p>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chatSuggestions">
+      <div class="suggestions-label">Try asking:</div>
+      <div class="chips">
+        <button class="chip" onclick="useSuggestion('Who teaches Math to Class 5A?')">Who teaches Math to Class 5A?</button>
+        <button class="chip" onclick="useSuggestion('What is Class 3B schedule on Monday?')">What is Class 3B schedule on Monday?</button>
+        <button class="chip" onclick="useSuggestion('Which teacher is free on Tuesday period 3?')">Which teacher is free on Tuesday period 3?</button>
+        <button class="chip" onclick="useSuggestion('List all subjects for Class 8A')">List all subjects for Class 8A</button>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Ask anything about the timetable..." />
+      <button class="chat-send-btn" onclick="sendChatMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TEACHER PERSONAL SCHEDULE SECTION
+  ============================================== -->
+  <section id="section-teacher" class="app-section">
+    <div class="section-container">
+      <div class="upload-header">
+        <h2 class="section-title"><i class="fas fa-chalkboard-teacher"></i> My Teaching Schedule</h2>
+        <p class="section-desc" id="teacherScheduleSubtitle">Your personal weekly timetable across all classes.</p>
+      </div>
+      <div id="teacherScheduleGrid" class="teacher-schedule-grid">
+        <div class="teacher-loading"><i class="fas fa-spinner fa-spin"></i> Loading your schedule...</div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

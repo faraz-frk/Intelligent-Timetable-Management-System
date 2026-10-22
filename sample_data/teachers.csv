@@ -1,0 +1,50 @@
+teacher_name,subject,classes,available_days,available_periods,max_periods_per_day
+Lakshmi Devi,Telugu,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Saraswathi Rao,Telugu,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Padma Kumari,Telugu,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Ramesh Babu,Hindi,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Sunita Singh,Hindi,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Geetha Rani,Hindi,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Mary Thomas,English,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Ananya Reddy,English,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Shobha Nair,English,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Prakash Rao,Social,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Deepa Kumar,Social,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Vijaya Laxmi,Social,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Ravi Kumar,Maths,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Kiran Babu,Maths,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Srinivas Rao,Maths,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Lavanya Reddy,Maths,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Meena Sharma,Maths,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Kavitha Reddy,Environmental Science,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Rajani Devi,Environmental Science,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Sunitha Varma,Environmental Science,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Naveen Chandra,Computer,1;2,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Priya Lakshmi,Computer,3;4,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Kiran Reddy,Computer,5,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Venkateswara Rao,Telugu,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Padmavathi Devi,Telugu,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Naga Raju,Telugu,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Anil Kumar,Hindi,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Reena Mishra,Hindi,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Suresh Dubey,Hindi,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Christopher D,English,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Sowmya Krishnan,English,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Preethi Menon,English,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Balaji Naidu,Maths,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Mohan Rao,Maths,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Nagaraju Reddy,Maths,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Anand Kumar,Maths,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Hema Latha,Maths,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Suresh Babu,Physics,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Nandini Sharma,Physics,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Rajesh Verma,Physics,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Ramadevi Prasad,Biology,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Srikanth Varma,Biology,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Anitha Srinivas,Biology,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Manohar Lal,Social,6;7,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Usha Rani,Social,8;9,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Aruna Sai,Social,10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,8
+Sai Kiran,Sports,1;2;3;4;5;6;7;8;9;10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,10
+Arjuna Reddy,Sports,1;2;3;4;5;6;7;8;9;10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,10
+Durga Bhavani,Sports,1;2;3;4;5;6;7;8;9;10,Mon;Tue;Wed;Thu;Fri;Sat,1;2;3;4;5;6;7;8,10

@@ -1,0 +1,29 @@
+﻿# Python virtual environment (all packages live here)
+venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment variables
+.env
+.env.local
+
+# HuggingFace model cache (downloaded on first run, ~90MB)
+# If you want to commit the cached model, remove this line
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Node.js and generated logs
+node_modules/
+*.log
